@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgres"
   url      = env("DATABASE_URL")
 }
 
@@ -13,48 +13,72 @@ generator client {
 // --------------------------------------
 
 model User {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  name           String?
-  email          String   @unique
+  id          Int    @id @default(autoincrement())
+  referenceId String @unique
+
+  email          String? @unique
   hashedPassword String?
-  role           String   @default("USER")
+  role           String  @default("USER")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   tokens   Token[]
   sessions Session[]
+  account  Account?
 }
 
 model Session {
-  id                 Int       @id @default(autoincrement())
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  expiresAt          DateTime?
-  handle             String    @unique
+  id                 Int     @id @default(autoincrement())
+  handle             String  @unique
   hashedSessionToken String?
   antiCSRFToken      String?
   publicData         String?
   privateData        String?
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expiresAt DateTime?
 
   user   User? @relation(fields: [userId], references: [id])
   userId Int?
 }
 
 model Token {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
   hashedToken String
-  type        String
-  // See note below about TokenType enum
-  // type        TokenType
+  type        TokenType
   expiresAt   DateTime
   sentTo      String
 
   user   User @relation(fields: [userId], references: [id])
   userId Int
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@unique([hashedToken, type])
+}
+
+model Account {
+  id     Int         @id @default(autoincrement())
+  key    String      @unique
+  status AccountType @default(INACTIVE)
+
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AccountType {
+  INACTIVE
+  ACTIVE
+}
+
+enum TokenType {
+  RESET_PASSWORD
 }
 
 // NOTE: It's highly recommended to use an enum for the token type
