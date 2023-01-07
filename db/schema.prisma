@@ -75,6 +75,7 @@ model Account {
 enum AccountType {
   INACTIVE
   ACTIVE
+  CLOSED
 }
 
 enum TokenType {
