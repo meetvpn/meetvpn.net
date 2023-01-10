@@ -88,3 +88,53 @@ enum TokenType {
 // enum TokenType {
 //   RESET_PASSWORD
 // }
+
+model Server {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  hostname String @unique
+  quality  Int
+
+  accessKey AccessKey[]
+  hosting   Hosting?
+  location  Location?
+}
+
+model AccessKey {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  keyId Int? @unique
+
+  method     String
+  password   String
+  host       String
+  port       Int
+  access_url String
+
+  server   Server @relation(fields: [serverId], references: [id])
+  serverId Int
+}
+
+model Location {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  city    String?
+  country String
+
+  server   Server @relation(fields: [serverId], references: [id])
+  serverId Int    @unique
+}
+
+model Hosting {
+  id       Int    @id @default(autoincrement())
+  provider String
+
+  server   Server @relation(fields: [serverId], references: [id])
+  serverId Int    @unique
+}

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "predev": "docker-compose up -d",
-    "dev": "blitz dev",
+    "dev": "concurrently --raw \"blitz dev\" 'quirrel'",
     "build": "blitz build",
     "start": "blitz start",
     "studio": "blitz prisma studio",
@@ -33,10 +33,13 @@
     "cors": "2.8.5",
     "final-form": "4.20.7",
     "next": "12.2.5",
+    "ShadowsocksConfig": "github:Jigsaw-Code/outline-shadowsocksconfig#v0.2.0",
     "prisma": "4.6.0",
+    "quirrel": "1.13.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-final-form": "6.5.9",
+    "wpapi": "1.2.2",
     "zod": "3.19.1"
   },
   "devDependencies": {
@@ -49,6 +52,7 @@
     "@types/react": "18.0.25",
     "@typescript-eslint/eslint-plugin": "5.42.1",
     "@vitejs/plugin-react": "2.2.0",
+    "concurrently": "6.5.1",
     "eslint": "8.27.0",
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "8.5.0",
