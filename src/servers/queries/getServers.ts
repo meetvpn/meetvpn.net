@@ -18,7 +18,15 @@ export default resolver.pipe(
       skip,
       take,
       count: () => db.server.count({ where }),
-      query: (paginateArgs) => db.server.findMany({ ...paginateArgs, where, orderBy }),
+      query: (paginateArgs) =>
+        db.server.findMany({
+          ...paginateArgs,
+          where,
+          orderBy,
+          include: {
+            location: true,
+          },
+        }),
     })
 
     return {
