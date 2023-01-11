@@ -8,7 +8,12 @@ import { authConfig } from "./blitz-client"
 import cors from "cors"
 
 const CORS = cors({
-  origin: ["http://localhost:3000", "http://localhost:8100", "https://meetvpn.net"],
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://localhost:8100",
+    "https://meetvpn.net",
+  ],
   credentials: true,
 })
 

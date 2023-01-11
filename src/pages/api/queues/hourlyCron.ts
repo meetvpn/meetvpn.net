@@ -2,7 +2,7 @@ import { CronJob } from "quirrel/blitz"
 import db, { AccessKey } from "db"
 import WPAPI from "wpapi"
 import { SHADOWSOCKS_URI } from "ShadowsocksConfig"
-import { L } from "@blitzjs/auth/dist/index-ced88017"
+import { byCountry } from "country-code-lookup"
 
 // Initialize the WordPress API client
 const wp = new WPAPI({ endpoint: "https://getoutline.me/wp-json" })
@@ -118,6 +118,11 @@ async function addKeyToDatabase(post: WPAPI.Post): Promise<void> {
           post._embedded["acf:term"][1]["name"]) ||
         "Unknown"
 
+      // get look up country code
+      const countryCode = await byCountry(locationName)?.iso2
+
+      console.log("countryCode", countryCode)
+
       await db.accessKey.create({
         data: {
           keyId: post.id,
@@ -147,6 +152,7 @@ async function addKeyToDatabase(post: WPAPI.Post): Promise<void> {
                     create: {
                       id: locationId,
                       country: locationName,
+                      countryCode: countryCode,
                     },
                   },
                 },
@@ -208,6 +214,11 @@ async function updateKeyInDatabase(post: WPAPI.Key): Promise<void> {
           post._embedded["acf:term"][1] &&
           post._embedded["acf:term"][1]["name"]) ||
         "Unknown"
+      // get look up country code
+      const countryCode = await byCountry(locationName)?.iso2
+
+      console.log("countryCode", countryCode)
+
       await db.accessKey.update({
         where: { keyId: post.id },
         data: {
@@ -238,6 +249,7 @@ async function updateKeyInDatabase(post: WPAPI.Key): Promise<void> {
                     create: {
                       id: locationId,
                       country: locationName,
+                      countryCode: countryCode,
                     },
                   },
                 },

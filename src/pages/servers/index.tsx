@@ -1,25 +1,25 @@
-import { Suspense } from "react";
-import { Routes } from "@blitzjs/next";
-import Head from "next/head";
-import Link from "next/link";
-import { usePaginatedQuery } from "@blitzjs/rpc";
-import { useRouter } from "next/router";
-import Layout from "src/core/layouts/Layout";
-import getServers from "src/servers/queries/getServers";
+import { Suspense } from "react"
+import { Routes } from "@blitzjs/next"
+import Head from "next/head"
+import Link from "next/link"
+import { usePaginatedQuery } from "@blitzjs/rpc"
+import { useRouter } from "next/router"
+import Layout from "src/core/layouts/Layout"
+import getServers from "src/servers/queries/getServers"
 
-const ITEMS_PER_PAGE = 100;
+const ITEMS_PER_PAGE = 100
 
 export const ServersList = () => {
-  const router = useRouter();
-  const page = Number(router.query.page) || 0;
+  const router = useRouter()
+  const page = Number(router.query.page) || 0
   const [{ servers, hasMore }] = usePaginatedQuery(getServers, {
     orderBy: { id: "asc" },
     skip: ITEMS_PER_PAGE * page,
     take: ITEMS_PER_PAGE,
-  });
+  })
 
-  const goToPreviousPage = () => router.push({ query: { page: page - 1 } });
-  const goToNextPage = () => router.push({ query: { page: page + 1 } });
+  const goToPreviousPage = () => router.push({ query: { page: page - 1 } })
+  const goToNextPage = () => router.push({ query: { page: page + 1 } })
 
   return (
     <div>
@@ -27,7 +27,7 @@ export const ServersList = () => {
         {servers.map((server) => (
           <li key={server.id}>
             <Link href={Routes.ShowServerPage({ serverId: server.id })}>
-              <a>{server.name}</a>
+              <a>{server.hostname}</a>
             </Link>
           </li>
         ))}
@@ -40,8 +40,8 @@ export const ServersList = () => {
         Next
       </button>
     </div>
-  );
-};
+  )
+}
 
 const ServersPage = () => {
   return (
@@ -62,7 +62,7 @@ const ServersPage = () => {
         </Suspense>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default ServersPage;
+export default ServersPage
