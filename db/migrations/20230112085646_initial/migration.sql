@@ -65,8 +65,9 @@ CREATE TABLE "Server" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "hostname" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
     "quality" INTEGER NOT NULL,
+    "locationId" INTEGER,
+    "hostingId" INTEGER,
 
     CONSTRAINT "Server_pkey" PRIMARY KEY ("id")
 );
@@ -92,9 +93,9 @@ CREATE TABLE "Location" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "city" TEXT NOT NULL,
+    "city" TEXT,
     "country" TEXT NOT NULL,
-    "serverId" INTEGER NOT NULL,
+    "countryCode" TEXT,
 
     CONSTRAINT "Location_pkey" PRIMARY KEY ("id")
 );
@@ -103,7 +104,6 @@ CREATE TABLE "Location" (
 CREATE TABLE "Hosting" (
     "id" SERIAL NOT NULL,
     "provider" TEXT NOT NULL,
-    "serverId" INTEGER NOT NULL,
 
     CONSTRAINT "Hosting_pkey" PRIMARY KEY ("id")
 );
@@ -132,12 +132,6 @@ CREATE UNIQUE INDEX "Server_hostname_key" ON "Server"("hostname");
 -- CreateIndex
 CREATE UNIQUE INDEX "AccessKey_keyId_key" ON "AccessKey"("keyId");
 
--- CreateIndex
-CREATE UNIQUE INDEX "Location_serverId_key" ON "Location"("serverId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Hosting_serverId_key" ON "Hosting"("serverId");
-
 -- AddForeignKey
 ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
@@ -148,10 +142,10 @@ ALTER TABLE "Token" ADD CONSTRAINT "Token_userId_fkey" FOREIGN KEY ("userId") RE
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Server" ADD CONSTRAINT "Server_locationId_fkey" FOREIGN KEY ("locationId") REFERENCES "Location"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Server" ADD CONSTRAINT "Server_hostingId_fkey" FOREIGN KEY ("hostingId") REFERENCES "Hosting"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "AccessKey" ADD CONSTRAINT "AccessKey_serverId_fkey" FOREIGN KEY ("serverId") REFERENCES "Server"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Location" ADD CONSTRAINT "Location_serverId_fkey" FOREIGN KEY ("serverId") REFERENCES "Server"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Hosting" ADD CONSTRAINT "Hosting_serverId_fkey" FOREIGN KEY ("serverId") REFERENCES "Server"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

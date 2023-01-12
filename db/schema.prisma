@@ -98,8 +98,12 @@ model Server {
   quality  Int
 
   accessKey AccessKey[]
-  hosting   Hosting?
-  location  Location?
+
+  location   Location? @relation(fields: [locationId], references: [id])
+  locationId Int?
+
+  hosting   Hosting? @relation(fields: [hostingId], references: [id])
+  hostingId Int?
 }
 
 model AccessKey {
@@ -128,14 +132,12 @@ model Location {
   country     String
   countryCode String?
 
-  server   Server @relation(fields: [serverId], references: [id])
-  serverId Int    @unique
+  servers Server[]
 }
 
 model Hosting {
   id       Int    @id @default(autoincrement())
   provider String
 
-  server   Server @relation(fields: [serverId], references: [id])
-  serverId Int    @unique
+  servers Server[]
 }

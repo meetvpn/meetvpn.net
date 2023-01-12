@@ -100,12 +100,12 @@ async function addKeyToDatabase(post: WPAPI.Post): Promise<void> {
         (post._embedded["acf:term"] &&
           post._embedded["acf:term"][0] &&
           post._embedded["acf:term"][0]["id"]) ||
-        "Unknown"
+        1
       const hostingName =
         (post._embedded["acf:term"] &&
           post._embedded["acf:term"][0] &&
           post._embedded["acf:term"][0]["name"]) ||
-        1
+        "Unknown"
 
       const locationId =
         (post._embedded["acf:term"] &&
@@ -121,7 +121,9 @@ async function addKeyToDatabase(post: WPAPI.Post): Promise<void> {
       // get look up country code
       const countryCode = await byCountry(locationName)?.iso2
 
-      console.log("countryCode", countryCode)
+      // console.log("countryCode", countryCode)
+
+      // create on db the key to the database with location and hosting
 
       await db.accessKey.create({
         data: {
@@ -197,12 +199,12 @@ async function updateKeyInDatabase(post: WPAPI.Key): Promise<void> {
         (post._embedded["acf:term"] &&
           post._embedded["acf:term"][0] &&
           post._embedded["acf:term"][0]["id"]) ||
-        "Unknown"
+        1
       const hostingName =
         (post._embedded["acf:term"] &&
           post._embedded["acf:term"][0] &&
           post._embedded["acf:term"][0]["name"]) ||
-        1
+        "Unknown"
 
       const locationId =
         (post._embedded["acf:term"] &&
@@ -217,7 +219,7 @@ async function updateKeyInDatabase(post: WPAPI.Key): Promise<void> {
       // get look up country code
       const countryCode = await byCountry(locationName)?.iso2
 
-      console.log("countryCode", countryCode)
+      // console.log("countryCode", countryCode)
 
       await db.accessKey.update({
         where: { keyId: post.id },
