@@ -5,7 +5,7 @@ import { SHADOWSOCKS_URI } from "ShadowsocksConfig"
 import { byCountry } from "country-code-lookup"
 
 // Initialize the WordPress API client
-const wp = new WPAPI({ endpoint: "https://getoutline.me/wp-json" })
+const wp = new WPAPI({ endpoint: process.env.WAPI_URL })
 
 async function syncDatabase(): Promise<void> {
   // Find the latest key in the database
