@@ -4,8 +4,8 @@
   "scripts": {
     "predev": "docker-compose up -d",
     "dev": "concurrently --raw \"blitz dev\" 'quirrel'",
-    "build": "blitz build",
-    "start": "blitz start",
+    "build": "NODE_ENV=production blitz build && blitz prisma migrate deploy",
+    "start": "blitz start --port ${PORT-3000}",
     "studio": "blitz prisma studio",
     "lint": "eslint --ignore-path .gitignore --ext .js,.ts,.tsx .",
     "test": "vitest run --passWithNoTests",
