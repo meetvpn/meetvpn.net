@@ -1,14 +1,14 @@
-import { Routes } from "@blitzjs/next";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useMutation } from "@blitzjs/rpc";
-import Layout from "src/core/layouts/Layout";
-import createServer from "src/servers/mutations/createServer";
-import { ServerForm, FORM_ERROR } from "src/servers/components/ServerForm";
+import { Routes } from "@blitzjs/next"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useMutation } from "@blitzjs/rpc"
+import Layout from "src/core/layouts/Layout"
+import createServer from "src/servers/mutations/createServer"
+import { ServerForm, FORM_ERROR } from "src/servers/components/ServerForm"
 
 const NewServerPage = () => {
-  const router = useRouter();
-  const [createServerMutation] = useMutation(createServer);
+  const router = useRouter()
+  const [createServerMutation] = useMutation(createServer)
 
   return (
     <Layout title={"Create New Server"}>
@@ -23,13 +23,13 @@ const NewServerPage = () => {
         // initialValues={{}}
         onSubmit={async (values) => {
           try {
-            const server = await createServerMutation(values);
-            await router.push(Routes.ShowServerPage({ serverId: server.id }));
+            const server = await createServerMutation(values)
+            // await router.push(Routes.ShowServerPage({ serverId: server.id }));
           } catch (error: any) {
-            console.error(error);
+            console.error(error)
             return {
               [FORM_ERROR]: error.toString(),
-            };
+            }
           }
         }}
       />
@@ -40,9 +40,9 @@ const NewServerPage = () => {
         </Link>
       </p>
     </Layout>
-  );
-};
+  )
+}
 
-NewServerPage.authenticate = true;
+NewServerPage.authenticate = true
 
-export default NewServerPage;
+export default NewServerPage

@@ -1,19 +1,19 @@
-import { Suspense } from "react";
-import { Routes } from "@blitzjs/next";
-import Head from "next/head";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useQuery, useMutation } from "@blitzjs/rpc";
-import { useParam } from "@blitzjs/next";
+import { Suspense } from "react"
+import { Routes } from "@blitzjs/next"
+import Head from "next/head"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { useQuery, useMutation } from "@blitzjs/rpc"
+import { useParam } from "@blitzjs/next"
 
-import Layout from "src/core/layouts/Layout";
-import getServer from "src/servers/queries/getServer";
-import updateServer from "src/servers/mutations/updateServer";
-import { ServerForm, FORM_ERROR } from "src/servers/components/ServerForm";
+import Layout from "src/core/layouts/Layout"
+import getServer from "src/servers/queries/getServer"
+import updateServer from "src/servers/mutations/updateServer"
+import { ServerForm, FORM_ERROR } from "src/servers/components/ServerForm"
 
 export const EditServer = () => {
-  const router = useRouter();
-  const serverId = useParam("serverId", "number");
+  const router = useRouter()
+  const serverId = useParam("serverId", "number")
   const [server, { setQueryData }] = useQuery(
     getServer,
     { id: serverId },
@@ -21,8 +21,8 @@ export const EditServer = () => {
       // This ensures the query never refreshes and overwrites the form data while the user is editing.
       staleTime: Infinity,
     }
-  );
-  const [updateServerMutation] = useMutation(updateServer);
+  )
+  const [updateServerMutation] = useMutation(updateServer)
 
   return (
     <>
@@ -46,23 +46,21 @@ export const EditServer = () => {
               const updated = await updateServerMutation({
                 id: server.id,
                 ...values,
-              });
-              await setQueryData(updated);
-              await router.push(
-                Routes.ShowServerPage({ serverId: updated.id })
-              );
+              })
+              // await setQueryData(updated);
+              // await router.push(Routes.ShowServerPage({ serverId: updated.id }))
             } catch (error: any) {
-              console.error(error);
+              console.error(error)
               return {
                 [FORM_ERROR]: error.toString(),
-              };
+              }
             }
           }}
         />
       </div>
     </>
-  );
-};
+  )
+}
 
 const EditServerPage = () => {
   return (
@@ -77,10 +75,10 @@ const EditServerPage = () => {
         </Link>
       </p>
     </div>
-  );
-};
+  )
+}
 
-EditServerPage.authenticate = true;
-EditServerPage.getLayout = (page) => <Layout>{page}</Layout>;
+EditServerPage.authenticate = true
+EditServerPage.getLayout = (page) => <Layout>{page}</Layout>
 
-export default EditServerPage;
+export default EditServerPage
