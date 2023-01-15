@@ -26,9 +26,9 @@ export const ServersList = () => {
       <ul>
         {servers.map((server) => (
           <li key={server.id}>
-            <Link href={Routes.ShowServerPage({ serverId: server.id })}>
+            {/* <Link href={Routes.ShowServerPage({ serverId: server.id })}>
               <a>{server.hostname}</a>
-            </Link>
+            </Link> */}
           </li>
         ))}
       </ul>
@@ -52,9 +52,9 @@ const ServersPage = () => {
 
       <div>
         <p>
-          <Link href={Routes.NewServerPage()}>
+          {/* <Link href={Routes.NewServerPage()}>
             <a>Create Server</a>
-          </Link>
+          </Link> */}
         </p>
 
         <Suspense fallback={<div>Loading...</div>}>

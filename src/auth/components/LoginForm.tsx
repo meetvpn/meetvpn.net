@@ -39,17 +39,17 @@ export const LoginForm = (props: LoginFormProps) => {
       >
         <LabeledTextField name="key" label="Key" placeholder="Key" />
         <div>
-          <Link href={Routes.ForgotPasswordPage()}>
+          {/* <Link href={Routes.ForgotPasswordPage()}>
             <a>Forgot your password?</a>
-          </Link>
+          </Link> */}
         </div>
       </Form>
 
       <div style={{ marginTop: "1rem" }}>
         Or{" "}
-        <Link href={Routes.SignupPage()}>
+        {/* <Link href={Routes.SignupPage()}>
           <a>Sign Up</a>
-        </Link>
+        </Link> */}
       </div>
     </div>
   )

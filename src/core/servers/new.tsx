@@ -35,9 +35,9 @@ const NewServerPage = () => {
       />
 
       <p>
-        <Link href={Routes.ServersPage()}>
+        {/* <Link href={Routes.ServersPage()}>
           <a>Servers</a>
-        </Link>
+        </Link> */}
       </p>
     </Layout>
   )
