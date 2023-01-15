@@ -1,15 +1,12 @@
-import { paginate } from "blitz";
-import { resolver } from "@blitzjs/rpc";
-import db, { Prisma } from "db";
+import { paginate } from "blitz"
+import { resolver } from "@blitzjs/rpc"
+import db, { Prisma } from "db"
 
 interface GetAccessKeysInput
-  extends Pick<
-    Prisma.AccessKeyFindManyArgs,
-    "where" | "orderBy" | "skip" | "take"
-  > {}
+  extends Pick<Prisma.AccessKeyFindManyArgs, "where" | "orderBy" | "skip" | "take"> {}
 
 export default resolver.pipe(
-  resolver.authorize(),
+  // resolver.authorize(),
   async ({ where, orderBy, skip = 0, take = 100 }: GetAccessKeysInput) => {
     // TODO: in multi-tenant app, you must add validation to ensure correct tenant
     const {
@@ -22,14 +19,14 @@ export default resolver.pipe(
       take,
       count: () => db.accessKey.count({ where }),
       query: (paginateArgs) =>
-        db.accessKey.findMany({ ...paginateArgs, where, orderBy }),
-    });
+        db.accessKey.findMany({ ...paginateArgs, where, orderBy, include: { server: true } }),
+    })
 
     return {
       accessKeys,
       nextPage,
       hasMore,
       count,
-    };
+    }
   }
-);
+)
