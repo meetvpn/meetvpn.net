@@ -13,8 +13,12 @@ async function syncDatabase(): Promise<void> {
 
   console.log("Latest key in database: ", latestKey)
 
+  const latestKeyApi = await getLatestKeyDate()
+
+  console.log("Latest key in API: ", latestKeyApi)
+
   // Check if the database is already up to date
-  if (latestKey && latestKey.createdAt >= (await getLatestKeyDate())) {
+  if (latestKey && latestKey.createdAt >= latestKeyApi) {
     return
   }
 
