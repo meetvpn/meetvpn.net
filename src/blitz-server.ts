@@ -7,10 +7,10 @@ import { authConfig } from "./blitz-client"
 
 import cors from "cors"
 
-const CORS = cors({
-  origin: ["http://localhost", "capacitor://localhost", "https://meetvpn.net"],
-  credentials: true,
-})
+// const CORS = cors({
+//   origin: ["http://localhost", "capacitor://localhost", "https://meetvpn.net"],
+//   credentials: true,
+// })
 
 export const { gSSP, gSP, api } = setupBlitzServer({
   plugins: [
@@ -19,7 +19,7 @@ export const { gSSP, gSP, api } = setupBlitzServer({
       storage: PrismaStorage(db),
       isAuthorized: simpleRolesIsAuthorized,
     }),
-    BlitzServerMiddleware(CORS),
+    BlitzServerMiddleware(cors()),
   ],
   logger: BlitzLogger({}),
 })
