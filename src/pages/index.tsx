@@ -275,7 +275,16 @@
 
 // export default Home
 
-import { Button, Flex, Heading, Image, Stack, Text, useBreakpointValue } from "@chakra-ui/react"
+import {
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useBreakpointValue,
+  Link,
+} from "@chakra-ui/react"
 
 export default function SplitScreen() {
   return (
@@ -309,17 +318,19 @@ export default function SplitScreen() {
             an open internet and protect your privacy online.
           </Text>
           <Stack direction={{ base: "column", md: "row" }} spacing={4}>
-            <Button
-              rounded={"full"}
-              bg={"green.500"}
-              size={"lg"}
-              color={"white"}
-              _hover={{
-                bg: "green.600",
-              }}
-            >
-              Donwload APK for Android
-            </Button>
+            <Link href="/app/MeetVPN-alpha-app-release.apk" isExternal>
+              <Button
+                rounded={"full"}
+                bg={"green.500"}
+                size={"lg"}
+                color={"white"}
+                _hover={{
+                  bg: "green.600",
+                }}
+              >
+                Donwload APK for Android
+              </Button>
+            </Link>
             {/* <Button rounded={"full"}>How It Works</Button> */}
           </Stack>
         </Stack>
