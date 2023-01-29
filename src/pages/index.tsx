@@ -336,11 +336,7 @@ export default function SplitScreen() {
         </Stack>
       </Flex>
       <Flex flex={1}>
-        <Image
-          alt={"Login Image"}
-          objectFit={"cover"}
-          src={"https://meetvpn.com/img/meetvpn-smartphones.png"}
-        />
+        <Image alt={"Login Image"} objectFit={"cover"} src={"/img/deviceframes.png"} />
       </Flex>
     </Stack>
   )
