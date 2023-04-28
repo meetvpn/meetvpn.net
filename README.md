@@ -6,7 +6,7 @@ This is a [Blitz.js](https://github.com/blitz-js/blitz) app.
 
 ## Getting Started
 
-Run your app in the development mode.
+Run your app in the development mode. MeetVPN
 
 ```
 blitz dev
